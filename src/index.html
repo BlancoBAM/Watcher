@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watcher</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h1>Watcher</h1>
+            </div>
+            <ul class="nav-list">
+                <li class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">&#9679;</span> Dashboard
+                </li>
+                <li class="nav-item" data-page="search">
+                    <span class="nav-icon">&#128269;</span> Search &amp; Add
+                </li>
+                <li class="nav-item" data-page="watchlist">
+                    <span class="nav-icon">&#9733;</span> Watchlist
+                </li>
+                <li class="nav-item" data-page="plays">
+                    <span class="nav-icon">&#128250;</span> Plays
+                </li>
+                <li class="nav-item" data-page="favorites">
+                    <span class="nav-icon">&#10084;</span> Favorites
+                </li>
+                <li class="nav-item" data-page="import-export">
+                    <span class="nav-icon">&#128229;</span> Import/Export
+                </li>
+                <li class="nav-item" data-page="recommendations">
+                    <span class="nav-icon">&#128161;</span> Recommendations
+                </li>
+                <li class="nav-item" data-page="places">
+                    <span class="nav-icon">&#127968;</span> Places
+                </li>
+            </ul>
+        </nav>
+        <main id="content">
+            <div id="page-dashboard" class="page active">
+                <h2>Dashboard</h2>
+                <div id="stats-grid" class="stats-grid"></div>
+                <h3>Recent Plays</h3>
+                <div id="recent-plays" class="card-grid"></div>
+            </div>
+
+            <div id="page-search" class="page">
+                <h2>Search Movies &amp; TV Shows</h2>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search by title..." autocomplete="off">
+                    <button id="search-btn" class="btn primary">Search</button>
+                </div>
+                <div id="search-results" class="card-grid"></div>
+                <div id="detail-view" class="detail-view" style="display:none"></div>
+            </div>
+
+            <div id="page-watchlist" class="page">
+                <h2>Watchlist</h2>
+                <div id="watchlist-grid" class="card-grid"></div>
+            </div>
+
+            <div id="page-plays" class="page">
+                <h2>All Plays</h2>
+                <div class="search-bar">
+                    <input type="text" id="plays-search" placeholder="Filter plays..." autocomplete="off">
+                    <select id="plays-sort">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="title">Title A-Z</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+                <div id="plays-grid" class="card-grid"></div>
+            </div>
+
+            <div id="page-favorites" class="page">
+                <h2>Favorites</h2>
+                <div class="tab-bar">
+                    <button class="tab active" data-tab="top-movies">Top Rated Movies</button>
+                    <button class="tab" data-tab="top-people">Frequent Cast</button>
+                    <button class="tab" data-tab="top-directors">Frequent Directors</button>
+                </div>
+                <div id="tab-top-movies" class="tab-content active">
+                    <div id="favorites-grid" class="card-grid"></div>
+                </div>
+                <div id="tab-top-people" class="tab-content">
+                    <div id="favorite-people-grid" class="card-grid"></div>
+                </div>
+                <div id="tab-top-directors" class="tab-content">
+                    <div id="favorite-directors-grid" class="card-grid"></div>
+                </div>
+            </div>
+
+            <div id="page-import-export" class="page">
+                <h2>Import / Export</h2>
+                <div class="import-export-container">
+                    <div class="ie-card">
+                        <h3>Export Database</h3>
+                        <p>Download all your data as JSON (movies, plays, ratings, watchlist, places).</p>
+                        <button id="export-btn" class="btn primary">Download Export</button>
+                    </div>
+                    <div class="ie-card">
+                        <h3>Import Database</h3>
+                        <p>Upload a previously exported JSON file to restore your data.</p>
+                        <input type="file" id="import-file" accept=".json" style="display:none">
+                        <button id="import-btn" class="btn secondary">Select File to Import</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-recommendations" class="page">
+                <h2>Recommendations</h2>
+                <div class="rec-bar">
+                    <input type="text" id="rec-prompt" placeholder="Describe what you want to watch..." autocomplete="off">
+                    <button id="rec-btn" class="btn primary">Get Recommendations</button>
+                </div>
+                <div class="rec-hint">
+                    <span style="color:var(--text2);font-size:13px">Examples: "A dark sci-fi thriller" or "Something like what I just watched"</span>
+                    <button id="rec-use-current" class="btn small secondary" onclick="useCurrentForRec()">Use current detail</button>
+                </div>
+                <div class="rec-status" id="rec-status"></div>
+                <div id="rec-results" class="card-grid"></div>
+            </div>
+
+            <div id="page-places" class="page">
+                <h2>Places</h2>
+                <div class="places-form">
+                    <input type="text" id="place-name" placeholder="Place name">
+                    <label><input type="checkbox" id="place-cinema"> Cinema</label>
+                    <button id="add-place-btn" class="btn primary">Add Place</button>
+                </div>
+                <div id="places-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-overlay" style="display:none">
+        <div id="modal-content"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
